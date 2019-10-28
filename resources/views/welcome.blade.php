@@ -23,15 +23,33 @@
                 <div>
                     <h3>Application</h3>
                     <p>
-                        Our application is our application.
+                        Our application is currently displaying the Post with ID #333. Our PostRepository implementation is not connected to any DB, it is using a predefined PostCollection
+                        (populated in the AppServiceProvider) as it's source data.
                     </p>
-
+                    <p>
+                        The application is using a dummy CachePool, where we can cache items (through a unique key) and retrieve them from cache (by their unique key). As our aim is
+                        not to implement a bulletproof caching mechanism, we won't deal with expiration dates in our CachePool.
+                    </p>
+                    <p>
+                        The CachePool is already prepared for us with an already cached item, under key <strong>"posts.333"</strong>.
+                    </p>
 
                     <h3>
                         The Task
                     </h3>
                     <p>
-                        The task it the task.
+                        We need to decorate our PostRepository, so it will also be using the CachePool when retrieving data. We should first check whether the Post exists in our
+                        CachePool, and if not add it to the CachePool and return the Post afterwards.
+                    </p>
+                    <p>
+                        After successfully implementing the Decorator pattern, the title of the Post should change to <br>
+                        <strong>"POST IS CACHED: We will be decorating..."</strong>.
+                    </p>
+                    <p>
+                        Laravel's Service Container already has some predefined interface for dealing with Decorators:
+                        <a href="https://laravel.com/docs/6.x/container#extending-bindings" target="_blank">
+                            https://laravel.com/docs/6.x/container#extending-bindings
+                        </a>
                     </p>
                     <p>Good luck!</p>
                 </div>
