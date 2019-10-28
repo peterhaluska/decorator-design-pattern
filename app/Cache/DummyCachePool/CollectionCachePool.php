@@ -3,13 +3,24 @@
 namespace App\Cache\DummyCachePool;
 
 use App\Cache\CachePool;
-use App\Entity\DummyORM\PostModel;
 use Illuminate\Support\Collection;
 
 class CollectionCachePool implements CachePool
 {
     /** @var Collection */
     private $items;
+
+    /**
+     * @param Collection $items
+     */
+    public function __construct(Collection $items = null)
+    {
+        if ($items === null) {
+            $items = new Collection([]);
+        }
+
+        $this->items = $items;
+    }
 
     /**
      * @param string $key
@@ -27,12 +38,6 @@ class CollectionCachePool implements CachePool
      */
     public function getCacheItemByKey(string $key)
     {
-        $item = $this->items->get($key);
-
-        if ($item instanceof PostModel) {
-            $item->setTitle('Post served from cache: ' . $item->getTitle());
-        }
-
-        return $item;
+        return $this->items->get($key);
     }
 }

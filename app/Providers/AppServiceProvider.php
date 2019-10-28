@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Cache\DummyCachePool\CollectionCachePool;
 use App\Collection\PostCollection;
 use App\Entity\DummyORM\PostModel;
 use App\Repository\DummyORM\PostModelRepository;
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
             ->give(function() use ($postCollection) {
                 return $postCollection;
             });
+
+        $collectionCachePool = new CollectionCachePool();
+        $cachedPost = new PostModel(333, 'POST IS CACHED: We will be decorating...', file_get_contents(public_path('post_1.html')));
+        $collectionCachePool->cacheItem('posts.333', $cachedPost);
     }
 
     /**
